@@ -1,38 +1,40 @@
-//
-//  ViewController.swift
-//  GoogleMapsProject
-//
-//  Created by Aditya Narayan on 5/15/17.
-//  Copyright © 2017 George Correa. All rights reserved.
-//
-
 import UIKit
-import CoreLocation
 import GoogleMaps
+import GooglePlaces
 
-class ViewController: UIViewController, GMSMapViewDelegate {
+class MapViewController: UIViewController, GMSMapViewDelegate {
+    
+    var locationManager:CLLocationManager = CLLocationManager()
+    var dataManager = DAO.sharedInstance
     
     @IBOutlet weak var mapView: GMSMapView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let startLocation = CLLocationCoordinate2DMake(-33.86, 151.20)
+        mapView.delegate = self
+        
+//        let startLocation = CLLocationCoordinate2DMake(-33.86, 151.20)
         let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
-        let marker = GMSMarker(position: currentLocation)
-        marker.title = "Turn To Tech"
-        marker.map = mapView
+//        let marker = GMSMarker(position: currentLocation)
+//        marker.title = "Turn To Tech"
+//        marker.appearAnimation = GMSMarkerAnimation.pop
+//        marker.map = mapView
         
-        mapView.camera = GMSCameraPosition.camera(withTarget: startLocation, zoom: 0)
-        
+        mapView.camera = GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15)
     }
     
     override func viewDidAppear(_ animated: Bool) {
-        let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
-        CATransaction.begin()
-        CATransaction.setValue(3, forKey: kCATransactionAnimationDuration)
-        mapView.animate(to: GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15))
-        CATransaction.commit()
+//        let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
+//        let marker = GMSMarker(position: currentLocation)
+//        marker.title = "Turn To Tech"
+//        marker.appearAnimation = GMSMarkerAnimation.pop
+//        marker.map = mapView
+//        mapView.camera = GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15)
+//        CATransaction.begin()
+//        CATransaction.setValue(2, forKey: kCATransactionAnimationDuration)
+//        mapView.animate(to: GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15))
+//        CATransaction.commit()
     }
     
     @IBAction func selectMapView(_ sender: UISegmentedControl) {
@@ -50,6 +52,17 @@ class ViewController: UIViewController, GMSMapViewDelegate {
             break
         }
         
+    }
+    
+    @IBAction func placeMarkers(_ sender: Any) {
+        let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
+        let marker = GMSMarker(position: currentLocation)
+        marker.title = "Turn To Tech"
+        CATransaction.begin()
+        CATransaction.setValue(5, forKey: kCATransactionAnimationDuration)
+        marker.appearAnimation = GMSMarkerAnimation.pop
+        marker.map = mapView
+        CATransaction.commit()
     }
 
 }

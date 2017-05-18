@@ -13,6 +13,7 @@
 		AA3F31EA1ECA52F10068E0B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */; };
 		AA3F31ED1ECA52F10068E0B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31EB1ECA52F10068E0B7 /* LaunchScreen.storyboard */; };
 		AA3F31F51ECA54EA0068E0B7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31F41ECA54EA0068E0B7 /* Podfile */; };
+		AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACEBBA31ECCD33000F65165 /* DAO.swift */; };
 		C8570B2E6EEB9AAAAE262648 /* libPods-GoogleMapsProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36B42B7DE7CBDCE4BD202A /* libPods-GoogleMapsProject.a */; };
 /* End PBXBuildFile section */
 
@@ -26,7 +27,8 @@
 		AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		AA3F31EC1ECA52F10068E0B7 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		AA3F31EE1ECA52F10068E0B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AA3F31F41ECA54EA0068E0B7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; };
+		AA3F31F41ECA54EA0068E0B7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		AACEBBA31ECCD33000F65165 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		DC36B42B7DE7CBDCE4BD202A /* libPods-GoogleMapsProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoogleMapsProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -74,8 +76,9 @@
 			isa = PBXGroup;
 			children = (
 				AA3F31E21ECA52F10068E0B7 /* AppDelegate.swift */,
-				AA3F31E41ECA52F10068E0B7 /* ViewController.swift */,
+				AACEBBA31ECCD33000F65165 /* DAO.swift */,
 				AA3F31E61ECA52F10068E0B7 /* Main.storyboard */,
+				AA3F31E41ECA52F10068E0B7 /* ViewController.swift */,
 				AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */,
 				AA3F31EB1ECA52F10068E0B7 /* LaunchScreen.storyboard */,
 				AA3F31EE1ECA52F10068E0B7 /* Info.plist */,
@@ -216,6 +219,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */,
 				AA3F31E51ECA52F10068E0B7 /* ViewController.swift in Sources */,
 				AA3F31E31ECA52F10068E0B7 /* AppDelegate.swift in Sources */,
 			);
@@ -348,6 +352,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TTT.GoogleMapsProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "<GoogleMapsProject>-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;
@@ -362,6 +367,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = TTT.GoogleMapsProject;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "<GoogleMapsProject>-Bridging.h";
 				SWIFT_VERSION = 3.0;
 			};
 			name = Release;
