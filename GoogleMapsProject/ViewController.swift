@@ -2,39 +2,35 @@ import UIKit
 import GoogleMaps
 import GooglePlaces
 
-class MapViewController: UIViewController, GMSMapViewDelegate {
+class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate {
     
     var locationManager:CLLocationManager = CLLocationManager()
+    var currentLocation: CLLocation?
     var dataManager = DAO.sharedInstance
-    
     @IBOutlet weak var mapView: GMSMapView!
+    var placesClient: GMSPlacesClient!
+    var zoomLevel: Float = 15.0
+    var hasSetUserLocation = false
+    
+    // An array to hold the list of likely places.
+    var likelyPlaces: [GMSPlace] = []
+    
+    // The currently selected place.
+    var selectedPlace: GMSPlace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        locationManager = CLLocationManager()
+        locationManager.desiredAccuracy = kCLLocationAccuracyBest
+        locationManager.requestAlwaysAuthorization()
+        locationManager.distanceFilter = 50
+        locationManager.startUpdatingLocation()
+        locationManager.delegate = self
+        
+        placesClient = GMSPlacesClient.shared()
+        
         mapView.delegate = self
-        
-//        let startLocation = CLLocationCoordinate2DMake(-33.86, 151.20)
-        let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
-//        let marker = GMSMarker(position: currentLocation)
-//        marker.title = "Turn To Tech"
-//        marker.appearAnimation = GMSMarkerAnimation.pop
-//        marker.map = mapView
-        
-        mapView.camera = GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15)
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-//        let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
-//        let marker = GMSMarker(position: currentLocation)
-//        marker.title = "Turn To Tech"
-//        marker.appearAnimation = GMSMarkerAnimation.pop
-//        marker.map = mapView
-//        mapView.camera = GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15)
-//        CATransaction.begin()
-//        CATransaction.setValue(2, forKey: kCATransactionAnimationDuration)
-//        mapView.animate(to: GMSCameraPosition.camera(withTarget: currentLocation, zoom: 15))
-//        CATransaction.commit()
     }
     
     @IBAction func selectMapView(_ sender: UISegmentedControl) {
@@ -54,6 +50,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         
     }
     
+    
     @IBAction func placeMarkers(_ sender: Any) {
         let currentLocation = CLLocationCoordinate2DMake(40.70859189999999, -74.01492050000002)
         let marker = GMSMarker(position: currentLocation)
@@ -63,6 +60,43 @@ class MapViewController: UIViewController, GMSMapViewDelegate {
         marker.appearAnimation = GMSMarkerAnimation.pop
         marker.map = mapView
         CATransaction.commit()
+    }
+    
+    // Set initial map view to user's current location.
+    func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if !hasSetUserLocation {
+            let location: CLLocation = locations.last!
+            print("Location: \(location)")
+        
+            let camera = GMSCameraPosition.camera(withLatitude: location.coordinate.latitude,
+                                              longitude: location.coordinate.longitude,
+                                              zoom: zoomLevel)
+            mapView.camera = camera
+            hasSetUserLocation = true
+        }
+    }
+    
+    // Handle authorization for the location manager.
+    func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
+        switch status {
+        case .restricted:
+            print("Location access was restricted.")
+        case .denied:
+            print("User denied access to location.")
+            // Display the map using the default location.
+            mapView.isHidden = false
+        case .notDetermined:
+            print("Location status not determined.")
+        case .authorizedAlways: fallthrough
+        case .authorizedWhenInUse:
+            print("Location status is OK.")
+        }
+    }
+    
+    // Handle location manager errors.
+    func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
+        locationManager.stopUpdatingLocation()
+        print("Error: \(error)")
     }
 
 }

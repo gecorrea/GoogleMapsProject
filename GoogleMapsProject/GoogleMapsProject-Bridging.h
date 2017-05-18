@@ -1,5 +1,5 @@
 //
-//  Bridging.h
+//  GoogleMapsProject-Bridging.h
 //  
 //
 //  Created by Aditya Narayan on 5/17/17.
@@ -12,4 +12,4 @@
 #define Bridging_h
 
 
-#endif /* Bridging_h */
+#endif /* GoogleMapsProject-Bridging_h */
