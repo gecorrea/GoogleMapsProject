@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12118" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="12120" systemVersion="16F73" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12086"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="12088"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -23,6 +23,18 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="IQn-pR-NWI" customClass="GMSMapView">
                                 <rect key="frame" x="0.0" y="64" width="375" height="559"/>
+                                <subviews>
+                                    <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t3d-Yk-Aqt">
+                                        <rect key="frame" x="0.0" y="0.0" width="375" height="559"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstAttribute="trailing" secondItem="t3d-Yk-Aqt" secondAttribute="trailing" id="0bt-0k-ZRQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="t3d-Yk-Aqt" secondAttribute="bottom" id="8SE-gz-7gl"/>
+                                    <constraint firstItem="t3d-Yk-Aqt" firstAttribute="leading" secondItem="IQn-pR-NWI" secondAttribute="leading" id="Jv4-2K-H1S"/>
+                                    <constraint firstItem="t3d-Yk-Aqt" firstAttribute="top" secondItem="IQn-pR-NWI" secondAttribute="top" id="bfW-n4-hc8"/>
+                                </constraints>
                             </view>
                             <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KFb-WO-QXF">
                                 <rect key="frame" x="0.0" y="623" width="375" height="44"/>
@@ -60,16 +72,18 @@
                             <constraint firstItem="Tsg-iQ-fes" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="5fg-kR-IEH"/>
                             <constraint firstItem="KFb-WO-QXF" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="984-c2-JIs"/>
                             <constraint firstItem="IQn-pR-NWI" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="Cbt-dU-1up"/>
-                            <constraint firstItem="KFb-WO-QXF" firstAttribute="top" secondItem="IQn-pR-NWI" secondAttribute="bottom" id="QGN-tc-pYv"/>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KFb-WO-QXF" secondAttribute="bottom" id="Ux4-o5-7jb"/>
                             <constraint firstAttribute="trailing" secondItem="IQn-pR-NWI" secondAttribute="trailing" id="WHO-bg-LPb"/>
                             <constraint firstAttribute="trailing" secondItem="KFb-WO-QXF" secondAttribute="trailing" id="gzD-xa-8zK"/>
                             <constraint firstItem="IQn-pR-NWI" firstAttribute="top" secondItem="Tsg-iQ-fes" secondAttribute="bottom" id="qLJ-KT-ugu"/>
+                            <constraint firstItem="KFb-WO-QXF" firstAttribute="top" secondItem="IQn-pR-NWI" secondAttribute="bottom" id="u4A-07-f0c"/>
                             <constraint firstItem="Tsg-iQ-fes" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" id="yay-WE-auo"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="clearView" destination="t3d-Yk-Aqt" id="E5A-F2-zjK"/>
                         <outlet property="mapView" destination="IQn-pR-NWI" id="eP1-MT-DcL"/>
+                        <outlet property="searchBar" destination="Tsg-iQ-fes" id="meS-nQ-MIc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
