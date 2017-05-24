@@ -1,8 +1,7 @@
 import UIKit
 import GoogleMaps
-import GooglePlaces
 
-class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate {
+class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, RefreshMapDelegate {
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -12,12 +11,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     var hasSetUserLocation = false
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var clearView: UIView!
-    
-    // An array to hold the list of likely places.
-    var likelyPlaces: [GMSPlace] = []
-    
-    // The currently selected place.
-    var selectedPlace: GMSPlace?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -145,7 +138,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         mapView.clear()
-        dataManager.getresults(searchString: searchBar.text!, location: mapView.myLocation!.coordinate, radius: 5000) // radius needs to be changed
+        dataManager.getresults(searchString: searchBar.text!, location: mapView.myLocation!.coordinate)
     }
     
     func refreshMap() {
