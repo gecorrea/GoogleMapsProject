@@ -54,9 +54,7 @@ class DAO {
                 let marker = Marker(placeID: placeID, title: "", snippet: "", position: placeLocation)
                 self.markers.append(marker)
             }
-            DispatchQueue.main.async {
-                self.delegate?.refreshMap()
-            }
+            self.delegate?.refreshMap()
         }.resume()
     }
     

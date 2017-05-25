@@ -19,7 +19,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         locationManager.requestWhenInUseAuthorization()
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
-        
+        dataManager.delegate = self
         mapView.delegate = self
 //        self.view.isUserInteractionEnabled = true
         clearView.isUserInteractionEnabled = true
