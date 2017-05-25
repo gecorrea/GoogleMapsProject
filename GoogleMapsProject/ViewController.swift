@@ -138,11 +138,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         mapView.clear()
-        dataManager.getresults(searchString: searchBar.text!, location: mapView.myLocation!.coordinate)
+        dataManager.beginSearch(searchString: searchBar.text!, location: mapView.myLocation!.coordinate)
     }
     
     func refreshMap() {
-//        mapView.addAnnotations(dataManager.annotations)
+        for marker in dataManager.markers {
+            marker.map = self.mapView
+        }
     }
 
 }

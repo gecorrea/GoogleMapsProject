@@ -13,6 +13,7 @@
 		AA3F31EA1ECA52F10068E0B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */; };
 		AA3F31ED1ECA52F10068E0B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31EB1ECA52F10068E0B7 /* LaunchScreen.storyboard */; };
 		AA3F31F51ECA54EA0068E0B7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31F41ECA54EA0068E0B7 /* Podfile */; };
+		AAAF4C5C1ED736E500564851 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAF4C5B1ED736E500564851 /* Marker.swift */; };
 		AACA33F81ECE2E8300646F6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACA33F71ECE2E8300646F6D /* CoreLocation.framework */; };
 		AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACEBBA31ECCD33000F65165 /* DAO.swift */; };
 		C8570B2E6EEB9AAAAE262648 /* libPods-GoogleMapsProject.a in Frameworks */ = {isa = PBXBuildFile; fileRef = DC36B42B7DE7CBDCE4BD202A /* libPods-GoogleMapsProject.a */; };
@@ -30,6 +31,7 @@
 		AA3F31EE1ECA52F10068E0B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3F31F41ECA54EA0068E0B7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AA52399F1ECE001F00D6C503 /* GoogleMapsProject-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleMapsProject-Bridging.h"; sourceTree = "<group>"; };
+		AAAF4C5B1ED736E500564851 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		AACA33F71ECE2E8300646F6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AACEBBA31ECCD33000F65165 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
 		DC36B42B7DE7CBDCE4BD202A /* libPods-GoogleMapsProject.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-GoogleMapsProject.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -83,6 +85,7 @@
 				AA3F31E21ECA52F10068E0B7 /* AppDelegate.swift */,
 				AACEBBA31ECCD33000F65165 /* DAO.swift */,
 				AA3F31E61ECA52F10068E0B7 /* Main.storyboard */,
+				AAAF4C5B1ED736E500564851 /* Marker.swift */,
 				AA3F31E41ECA52F10068E0B7 /* ViewController.swift */,
 				AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */,
 				AA3F31EB1ECA52F10068E0B7 /* LaunchScreen.storyboard */,
@@ -226,6 +229,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */,
+				AAAF4C5C1ED736E500564851 /* Marker.swift in Sources */,
 				AA3F31E51ECA52F10068E0B7 /* ViewController.swift in Sources */,
 				AA3F31E31ECA52F10068E0B7 /* AppDelegate.swift in Sources */,
 			);
