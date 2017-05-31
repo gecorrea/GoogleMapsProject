@@ -31,7 +31,7 @@ class DAO {
     func getLocationsAndPlacesIDs(url: URL) {
         URLSession.shared.dataTask(with: url) {
             (data, response, error) in
-                print(response)
+//                print(response)
             
             guard let myData:Data = data
                 else {return}

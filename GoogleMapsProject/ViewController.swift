@@ -103,7 +103,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
             }
         }.resume()
     }
-
+    
+    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+        marker.tracksInfoWindowChanges = true
+        
+        return true
+    }
+    
     // Handle authorization for the location manager.
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
@@ -143,7 +149,11 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     
     func refreshMap() {
         for marker in dataManager.markers {
+            CATransaction.begin()
+            CATransaction.setValue(5, forKey: kCATransactionAnimationDuration)
+            marker.appearAnimation = GMSMarkerAnimation.pop
             marker.map = self.mapView
+            CATransaction.commit()
         }
     }
 
