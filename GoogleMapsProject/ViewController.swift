@@ -1,7 +1,7 @@
 import UIKit
 import GoogleMaps
 
-class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, RefreshMapDelegate {
+class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, RefreshMapDelegate, ReloadInfoWindowDelegate {
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -21,6 +21,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         locationManager.distanceFilter = 50
         locationManager.startUpdatingLocation()
         dataManager.delegate = self
+        dataManager.infoWindowDelegate = self
         mapView.delegate = self
         clearView.isUserInteractionEnabled = true
         searchBar.delegate = self
@@ -97,11 +98,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
     
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        let infoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as! CustomInfoWindow
         tappedMarker = marker as! Marker
         tappedMarker.image = dataManager.loadImage(photoReference: tappedMarker.photoReference!)
         tappedMarker.tracksInfoWindowChanges = true
         tappedMarker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
-        let infoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as! CustomInfoWindow
+        
         infoWindow.locationName.text = tappedMarker.title
         infoWindow.locationAddress.text = tappedMarker.snippet
         infoWindow.imageView.image = tappedMarker.image
@@ -170,6 +172,10 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
             marker.map = self.mapView
             CATransaction.commit()
         }
+    }
+    
+    func reloadInfoWindow() {
+        tappedMarker.tracksInfoWindowChanges = true
     }
 
 }

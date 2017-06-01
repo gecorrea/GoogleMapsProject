@@ -6,10 +6,15 @@ protocol RefreshMapDelegate {
     func refreshMap()
 }
 
+protocol ReloadInfoWindowDelegate {
+    func reloadInfoWindow()
+}
+
 class DAO {
     static let sharedInstance = DAO()
     var markers = [Marker]()
     var delegate : RefreshMapDelegate?
+    var infoWindowDelegate : ReloadInfoWindowDelegate?
     let apiKey = "AIzaSyA7oHTPVRv6RUtuCZRNDQTXxp5Z6t-CNgE"
     var placesClient : GMSPlacesClient!
     let defaultwebsite = "https://www.google.com/#q="
@@ -82,6 +87,7 @@ class DAO {
                         else {return}
                     if let myImage = UIImage(data: myData) {
                         image = myImage
+                        self.infoWindowDelegate?.reloadInfoWindow()
                     }
                 }.resume()
             }
