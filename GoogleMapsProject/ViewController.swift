@@ -11,6 +11,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     var hasSetUserLocation = false
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var clearView: UIView!
+    var tappedMarker : Marker!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +22,6 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         locationManager.startUpdatingLocation()
         dataManager.delegate = self
         mapView.delegate = self
-//        self.view.isUserInteractionEnabled = true
         clearView.isUserInteractionEnabled = true
         searchBar.delegate = self
         mapView.bringSubview(toFront: clearView)
@@ -67,55 +67,68 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         let marker = GMSMarker(position: currentLocation)
         marker.title = "Turn To Tech"
         marker.snippet = "Learn, Build Apps, Get Hired"
-            //Put it in our label
-//            DispatchQueue.main.async {
-////                marker.iconView = imageView
+//               marker.iconView = imageView
                 marker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
                 CATransaction.begin()
                 CATransaction.setValue(5, forKey: kCATransactionAnimationDuration)
                 marker.appearAnimation = GMSMarkerAnimation.pop
                 marker.map = self.mapView
                 CATransaction.commit()
-//            }
-//        CATransaction.begin()
-//        CATransaction.setValue(5, forKey: kCATransactionAnimationDuration)
-//        marker.appearAnimation = GMSMarkerAnimation.pop
-//        marker.map = self.mapView
-//        CATransaction.commit()
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-        guard let imageURL = URL(string: "http://turntotech.io/wp-content/uploads/2015/12/kaushik-biswas.jpg")
-            else {return}
-        URLSession.shared.dataTask(with: imageURL) {
-            (data, response, error) in
-            //print(response)
-            
-            //Get our json (data) and turn it into a dictionary
-            //Check that we have data
-            guard let myData:Data = data
-                else {return}
-            
-            let image = UIImage(data: myData)
-            let imageView = UIImageView(image: image)
-            DispatchQueue.main.async {
-                marker.iconView = imageView
-            }
-        }.resume()
+//        guard let imageURL = URL(string: "http://turntotech.io/wp-content/uploads/2015/12/kaushik-biswas.jpg")
+//            else {return}
+//        URLSession.shared.dataTask(with: imageURL) {
+//            (data, response, error) in
+//            //print(response)
+//            
+//            //Get our json (data) and turn it into a dictionary
+//            //Check that we have data
+//            guard let myData:Data = data
+//                else {return}
+//            
+//            let image = UIImage(data: myData)
+//            let imageView = UIImageView(image: image)
+//            DispatchQueue.main.async {
+//                marker.iconView = imageView
+//            }
+//        }.resume()
     }
     
-    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-        marker.tracksInfoWindowChanges = true
-        
-        return true
+    func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
+        tappedMarker = marker as! Marker
+        tappedMarker.image = dataManager.loadImage(photoReference: tappedMarker.photoReference!)
+        tappedMarker.tracksInfoWindowChanges = true
+        tappedMarker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
+        let infoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as! CustomInfoWindow
+        infoWindow.locationName.text = tappedMarker.title
+        infoWindow.locationAddress.text = tappedMarker.snippet
+        infoWindow.imageView.image = tappedMarker.image
+        infoWindow.imageView.contentMode = .scaleAspectFill
+        if let rating = tappedMarker.rating {
+            infoWindow.rating.text = "Rating: \(rating)/5"
+        }
+        if let priceLevel = tappedMarker.priceLevel {
+            let price = dataManager.loadPriceLevel(priceLevel:priceLevel)
+            infoWindow.priceLevel.text = price
+        }
+        return infoWindow
     }
+    
+    // Give the tapped marker all the properties of the marker class.
+//    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
+//        tappedMarker = marker as! Marker
+//        tappedMarker.image = dataManager.loadImage(photoReference: tappedMarker.photoReference!)
+//        tappedMarker.tracksInfoWindowChanges = true
+//        tappedMarker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
+//        return true
+//    }
     
     // Handle authorization for the location manager.
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
         if status == .authorizedWhenInUse {
-            
             locationManager.startUpdatingLocation()
-            
             mapView.isMyLocationEnabled = true
             mapView.settings.myLocationButton = true
         }
@@ -142,11 +155,13 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         print("Error: \(error)")
     }
     
+    // Handle search click from keyboard.
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         mapView.clear()
         dataManager.beginSearch(searchString: searchBar.text!, location: mapView.myLocation!.coordinate)
     }
     
+    // Delegate method from DAO class.
     func refreshMap() {
         for marker in dataManager.markers {
             CATransaction.begin()

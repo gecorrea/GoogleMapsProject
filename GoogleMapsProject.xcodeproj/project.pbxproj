@@ -13,6 +13,8 @@
 		AA3F31EA1ECA52F10068E0B7 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31E91ECA52F10068E0B7 /* Assets.xcassets */; };
 		AA3F31ED1ECA52F10068E0B7 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31EB1ECA52F10068E0B7 /* LaunchScreen.storyboard */; };
 		AA3F31F51ECA54EA0068E0B7 /* Podfile in Resources */ = {isa = PBXBuildFile; fileRef = AA3F31F41ECA54EA0068E0B7 /* Podfile */; };
+		AA84A2E41EE06B540056469A /* CustomInfoWindow.swift in Sources */ = {isa = PBXBuildFile; fileRef = AA84A2E21EE06B540056469A /* CustomInfoWindow.swift */; };
+		AA84A2E51EE06B540056469A /* CustomInfoWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = AA84A2E31EE06B540056469A /* CustomInfoWindow.xib */; };
 		AAAF4C5C1ED736E500564851 /* Marker.swift in Sources */ = {isa = PBXBuildFile; fileRef = AAAF4C5B1ED736E500564851 /* Marker.swift */; };
 		AACA33F81ECE2E8300646F6D /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACA33F71ECE2E8300646F6D /* CoreLocation.framework */; };
 		AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */ = {isa = PBXBuildFile; fileRef = AACEBBA31ECCD33000F65165 /* DAO.swift */; };
@@ -31,6 +33,8 @@
 		AA3F31EE1ECA52F10068E0B7 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		AA3F31F41ECA54EA0068E0B7 /* Podfile */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Podfile; sourceTree = "<group>"; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		AA52399F1ECE001F00D6C503 /* GoogleMapsProject-Bridging.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "GoogleMapsProject-Bridging.h"; sourceTree = "<group>"; };
+		AA84A2E21EE06B540056469A /* CustomInfoWindow.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomInfoWindow.swift; sourceTree = "<group>"; };
+		AA84A2E31EE06B540056469A /* CustomInfoWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = CustomInfoWindow.xib; sourceTree = "<group>"; };
 		AAAF4C5B1ED736E500564851 /* Marker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Marker.swift; sourceTree = "<group>"; };
 		AACA33F71ECE2E8300646F6D /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		AACEBBA31ECCD33000F65165 /* DAO.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DAO.swift; sourceTree = "<group>"; };
@@ -83,6 +87,8 @@
 			children = (
 				AA52399F1ECE001F00D6C503 /* GoogleMapsProject-Bridging.h */,
 				AA3F31E21ECA52F10068E0B7 /* AppDelegate.swift */,
+				AA84A2E21EE06B540056469A /* CustomInfoWindow.swift */,
+				AA84A2E31EE06B540056469A /* CustomInfoWindow.xib */,
 				AACEBBA31ECCD33000F65165 /* DAO.swift */,
 				AA3F31E61ECA52F10068E0B7 /* Main.storyboard */,
 				AAAF4C5B1ED736E500564851 /* Marker.swift */,
@@ -166,6 +172,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AA84A2E51EE06B540056469A /* CustomInfoWindow.xib in Resources */,
 				AA3F31ED1ECA52F10068E0B7 /* LaunchScreen.storyboard in Resources */,
 				AA3F31EA1ECA52F10068E0B7 /* Assets.xcassets in Resources */,
 				AA3F31F51ECA54EA0068E0B7 /* Podfile in Resources */,
@@ -231,6 +238,7 @@
 				AACEBBA41ECCD33000F65165 /* DAO.swift in Sources */,
 				AAAF4C5C1ED736E500564851 /* Marker.swift in Sources */,
 				AA3F31E51ECA52F10068E0B7 /* ViewController.swift in Sources */,
+				AA84A2E41EE06B540056469A /* CustomInfoWindow.swift in Sources */,
 				AA3F31E31ECA52F10068E0B7 /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

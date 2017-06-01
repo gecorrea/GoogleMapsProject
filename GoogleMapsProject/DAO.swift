@@ -43,19 +43,67 @@ class DAO {
                 else {return}
             for result in results {
             // first check that locality exists
-            guard let placeID = result["place_id"] as? String,
-                let location = result["geometry"]?["location"] as? [String: AnyObject]
-                else {return}
-                let lat = location["lat"] as? Double
-                let lng = location["lng"] as? Double
+            guard let title = result["name"] as? String,
+                let snippet = result["vicinity"] as? String,
+                let placeID = result["place_id"] as? String,
+                let location = result["geometry"]?["location"] as? [String: AnyObject],
+                let photos = result["photos"] as? NSArray,
+                let photosDict = photos[0] as? NSDictionary,
+                let photoReference = photosDict["photo_reference"] as? String,
+                let priceLevel = result["price_level"] as? Int
+                
+                    else {continue}
+                var rating: String = "N/A"
+                if let tempRating = result["rating"] as? String {
+                    rating = tempRating
+                }
                 var placeLocation = CLLocationCoordinate2D()
-                placeLocation.latitude = lat!
-                placeLocation.longitude = lng!
-                let marker = Marker(placeID: placeID, title: "", snippet: "", position: placeLocation)
+                if let lat = location["lat"] as? Double {
+                    placeLocation.latitude = lat
+                }
+                if let lng = location["lng"] as? Double {
+                    placeLocation.longitude = lng
+                }
+                let marker = Marker(title: title, snippet: snippet, position: placeLocation, photoReference: photoReference, priceLevel: priceLevel, rating: rating, placeID: placeID)
                 self.markers.append(marker)
             }
             self.delegate?.refreshMap()
         }.resume()
+    }
+    
+    func loadImage(photoReference: String) -> UIImage {
+        let urlString = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference=\(photoReference)&key=\(apiKey)"
+        var image = UIImage()
+        DispatchQueue.main.async {
+            if let url = URL(string: urlString) {
+                URLSession.shared.dataTask(with: url) {
+                    (data, response, error) in
+                    guard let myData:Data = data
+                        else {return}
+                    if let myImage = UIImage(data: myData) {
+                        image = myImage
+                    }
+                }.resume()
+            }
+        }
+        return image
+    }
+    
+    func loadPriceLevel(priceLevel: Int) -> String {
+        switch priceLevel {
+        case 1:
+            return "$"
+        case 2:
+            return "$$"
+        case 3:
+            return "$$$"
+        case 4:
+            return "$$$$"
+        case 5:
+            return "$$$$$"
+        default:
+            return "N/A"
+        }
     }
     
 //    func getResluts() {
