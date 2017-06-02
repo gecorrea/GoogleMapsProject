@@ -18,6 +18,8 @@ class DAO {
     let apiKey = "AIzaSyA7oHTPVRv6RUtuCZRNDQTXxp5Z6t-CNgE"
     var placesClient : GMSPlacesClient!
     let defaultwebsite = "https://www.google.com/#q="
+    var image = UIImage()
+    let imageCache = NSCache <AnyObject, AnyObject>()
     
     
     
@@ -60,7 +62,7 @@ class DAO {
                     else {continue}
                 var rating: String = "N/A"
                 if let tempRating = result["rating"] as? String {
-                    rating = tempRating
+                    rating = "\(tempRating)/5"
                 }
                 var placeLocation = CLLocationCoordinate2D()
                 if let lat = location["lat"] as? Double {
@@ -76,23 +78,36 @@ class DAO {
         }.resume()
     }
     
-    func loadImage(photoReference: String) -> UIImage {
+    
+    func loadImage(photoReference: String) {
         let urlString = "https://maps.googleapis.com/maps/api/place/photo?maxwidth=100&photoreference=\(photoReference)&key=\(apiKey)"
-        var image = UIImage()
-        DispatchQueue.main.async {
+    
             if let url = URL(string: urlString) {
+                
+                if let imageFromCache = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+                    self.image = imageFromCache
+                    self.infoWindowDelegate?.reloadInfoWindow()
+                    return
+                }
                 URLSession.shared.dataTask(with: url) {
                     (data, response, error) in
-                    guard let myData:Data = data
-                        else {return}
-                    if let myImage = UIImage(data: myData) {
-                        image = myImage
-                        self.infoWindowDelegate?.reloadInfoWindow()
+                    
+                    if error != nil {
+                        print(error!)
+                        return
+                    }
+                    DispatchQueue.main.async {
+                        guard let myData:Data = data
+                            else {return}
+                        if let myImage = UIImage(data: myData) {
+                            let imageToCache = myImage
+                            self.imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
+                            self.image = imageToCache
+                            self.infoWindowDelegate?.reloadInfoWindow()
+                        }
                     }
                 }.resume()
             }
-        }
-        return image
     }
     
     func loadPriceLevel(priceLevel: Int) -> String {

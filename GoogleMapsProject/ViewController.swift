@@ -11,7 +11,8 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     var hasSetUserLocation = false
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var clearView: UIView!
-    var tappedMarker : Marker!
+    var tappedMarker: Marker!
+    var infoWindow: CustomInfoWindow!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -97,35 +98,25 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
 //        }.resume()
     }
     
+    // Set custom info window for tapped marker.
     func mapView(_ mapView: GMSMapView, markerInfoWindow marker: GMSMarker) -> UIView? {
-        let infoWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as! CustomInfoWindow
+        let newWindow = Bundle.main.loadNibNamed("CustomInfoWindow", owner: self, options: nil)?[0] as! CustomInfoWindow
         tappedMarker = marker as! Marker
-        tappedMarker.image = dataManager.loadImage(photoReference: tappedMarker.photoReference!)
+        infoWindow = newWindow
         tappedMarker.tracksInfoWindowChanges = true
-        tappedMarker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
-        
-        infoWindow.locationName.text = tappedMarker.title
-        infoWindow.locationAddress.text = tappedMarker.snippet
-        infoWindow.imageView.image = tappedMarker.image
-        infoWindow.imageView.contentMode = .scaleAspectFill
+        dataManager.loadImage(photoReference: tappedMarker.photoReference!)
+        newWindow.locationName.text = tappedMarker.title
+        newWindow.locationAddress.text = tappedMarker.snippet
+        newWindow.imageView.contentMode = .scaleToFill
         if let rating = tappedMarker.rating {
-            infoWindow.rating.text = "Rating: \(rating)/5"
+            newWindow.rating.text = "Rating: \(rating)"
         }
         if let priceLevel = tappedMarker.priceLevel {
             let price = dataManager.loadPriceLevel(priceLevel:priceLevel)
-            infoWindow.priceLevel.text = price
+            newWindow.priceLevel.text = "Price Level: \(price)"
         }
-        return infoWindow
+        return newWindow
     }
-    
-    // Give the tapped marker all the properties of the marker class.
-//    func mapView(_ mapView: GMSMapView, didTap marker: GMSMarker) -> Bool {
-//        tappedMarker = marker as! Marker
-//        tappedMarker.image = dataManager.loadImage(photoReference: tappedMarker.photoReference!)
-//        tappedMarker.tracksInfoWindowChanges = true
-//        tappedMarker.infoWindowAnchor = CGPoint(x: 0.5, y: 0.5)
-//        return true
-//    }
     
     // Handle authorization for the location manager.
     func locationManager(_ manager: CLLocationManager, didChangeAuthorization status: CLAuthorizationStatus) {
@@ -168,6 +159,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         for marker in dataManager.markers {
             CATransaction.begin()
             CATransaction.setValue(5, forKey: kCATransactionAnimationDuration)
+            marker.icon = GMSMarker.markerImage(with: UIColor.green)
             marker.appearAnimation = GMSMarkerAnimation.pop
             marker.map = self.mapView
             CATransaction.commit()
@@ -175,7 +167,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
     
     func reloadInfoWindow() {
-        tappedMarker.tracksInfoWindowChanges = true
+        infoWindow.imageView.image = dataManager.image
     }
 
 }
