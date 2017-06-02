@@ -90,10 +90,10 @@
             </objects>
             <point key="canvasLocation" x="140" y="133.5832083958021"/>
         </scene>
-        <!--View Controller-->
+        <!--Web ViewVC-->
         <scene sceneID="J6i-Pv-6yc">
             <objects>
-                <viewController id="vOw-NF-yqT" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="WebViewVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="vOw-NF-yqT" customClass="WebViewVC" customModule="GoogleMapsProject" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="W46-kt-cSs"/>
                         <viewControllerLayoutGuide type="bottom" id="iTb-BX-udk"/>
@@ -101,12 +101,35 @@
                     <view key="view" contentMode="scaleToFill" id="kA9-da-zgp">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vGp-uX-tpl">
+                                <rect key="frame" x="162" y="597" width="50" height="50"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="50" id="n0G-QQ-Aet"/>
+                                    <constraint firstAttribute="height" constant="50" id="zX2-bW-4bR"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="Maps-icon"/>
+                                <connections>
+                                    <action selector="backToMap:" destination="vOw-NF-yqT" eventType="touchUpInside" id="eYl-x9-96e"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="iTb-BX-udk" firstAttribute="top" secondItem="vGp-uX-tpl" secondAttribute="bottom" constant="20" id="rvw-eB-ppa"/>
+                            <constraint firstItem="vGp-uX-tpl" firstAttribute="centerX" secondItem="kA9-da-zgp" secondAttribute="centerX" id="vN7-7F-eEv"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="mapButton" destination="vGp-uX-tpl" id="1pz-OS-cSp"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hDn-uQ-FfK" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="927" y="134"/>
+            <point key="canvasLocation" x="925.60000000000002" y="133.5832083958021"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Maps-icon" width="256" height="256"/>
+    </resources>
 </document>

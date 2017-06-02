@@ -1,7 +1,8 @@
 import UIKit
 import GoogleMaps
+import WebKit
 
-class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, RefreshMapDelegate, ReloadInfoWindowDelegate {
+class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManagerDelegate, UISearchBarDelegate, RefreshMapDelegate, ReloadInfoWindowDelegate, LoadWebViewVC {
     
     let locationManager = CLLocationManager()
     var currentLocation: CLLocation?
@@ -23,6 +24,7 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         locationManager.startUpdatingLocation()
         dataManager.delegate = self
         dataManager.infoWindowDelegate = self
+        dataManager.webViewVCDelegate = self
         mapView.delegate = self
         clearView.isUserInteractionEnabled = true
         searchBar.delegate = self
@@ -79,23 +81,12 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     }
     
     func mapView(_ mapView: GMSMapView, didTapInfoWindowOf marker: GMSMarker) {
-//        guard let imageURL = URL(string: "http://turntotech.io/wp-content/uploads/2015/12/kaushik-biswas.jpg")
-//            else {return}
-//        URLSession.shared.dataTask(with: imageURL) {
-//            (data, response, error) in
-//            //print(response)
-//            
-//            //Get our json (data) and turn it into a dictionary
-//            //Check that we have data
-//            guard let myData:Data = data
-//                else {return}
-//            
-//            let image = UIImage(data: myData)
-//            let imageView = UIImageView(image: image)
-//            DispatchQueue.main.async {
-//                marker.iconView = imageView
-//            }
-//        }.resume()
+        if let tempName = tappedMarker.title {
+            let name = tempName
+            if let placeID = tappedMarker.placeID {
+                dataManager.getWebURL(placeID: placeID, name: name)
+            }
+        }
     }
     
     // Set custom info window for tapped marker.
@@ -104,7 +95,9 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
         tappedMarker = marker as! Marker
         infoWindow = newWindow
         tappedMarker.tracksInfoWindowChanges = true
-        dataManager.loadImage(photoReference: tappedMarker.photoReference!)
+        if let photoReference = tappedMarker.photoReference {
+            dataManager.loadImage(photoReference: photoReference)
+        }
         newWindow.locationName.text = tappedMarker.title
         newWindow.locationAddress.text = tappedMarker.snippet
         newWindow.imageView.contentMode = .scaleToFill
@@ -168,6 +161,15 @@ class MapViewController: UIViewController, GMSMapViewDelegate, CLLocationManager
     
     func reloadInfoWindow() {
         infoWindow.imageView.image = dataManager.image
+    }
+    
+    func loadWebViewVC() {
+        let webURLString = dataManager.webString
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        let webViewVC = storyboard.instantiateViewController(withIdentifier: "WebViewVC") as! WebViewVC
+        webViewVC.urlString = webURLString
+        
+        present(webViewVC, animated: true, completion: nil)
     }
 
 }
